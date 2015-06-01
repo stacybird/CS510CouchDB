@@ -30,14 +30,14 @@ def writeNRecords(n):
   count = 0
   jsonFile.write("[")
   for row in myReader:
+    if count != 0:
+      jsonFile.write(", ")
     row['tag'] = fileTag
     parsedJson = json.dumps( row )
     jsonFile.write(parsedJson)
     count += 1
     if 0 == (count % n):
       break
-    else:
-      jsonFile.write(", ")
   jsonFile.write("]")
 
 writeNRecords(10000)
