@@ -13,6 +13,6 @@ dbName = sys.argv[2]
 jsonFile = sys.argv[3]
 
 DB="http://" + hostName +":5984/" +dbName
-command = "curl -d " + jsonFile + " -X POST " + DB + "/_bulk_docs"
+command = "curl -H \"Content-Type: application/json\"  -d " + jsonFile + " -X POST " + DB + "/_bulk_docs"
 os.system( command )
 
