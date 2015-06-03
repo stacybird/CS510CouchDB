@@ -35,6 +35,11 @@ def writeNRecords(n):
     if count != 0:
       jsonFile.write(", ")
     row['tag'] = fileTag
+    for key in row:
+      try:
+        row[key] = int(row[key])
+      except:
+        pass
     parsedJson = json.dumps( row )
     jsonFile.write(parsedJson)
     count += 1
@@ -44,6 +49,6 @@ def writeNRecords(n):
   print "up to 10,000 JSON records saved to: ", jsonFileName  
   return (jsonFileCount + 1)
 
-for x in range(1,250):
+for x in range(0,1790):
   jsonFileCount = writeNRecords(10000)
 
