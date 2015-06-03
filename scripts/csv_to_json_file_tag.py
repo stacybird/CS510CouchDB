@@ -11,7 +11,7 @@ if len(sys.argv) != 3:
 
 print 'Argument List:', str(sys.argv)
 csvFileName = sys.argv[1]
-jsonFileName = sys.argv[2]
+jsonFileArray = sys.argv[2].split(".")
 
 csvFile = open (csvFileName, 'rU')
 myReader = csv.reader(csvFile)
@@ -20,13 +20,15 @@ print "Header fields:", header
 
 myReader = csv.DictReader( csvFile, fieldnames = header) 
 
-jsonFile = open( jsonFileName, 'w')  
-
 # far too fancy regex for my tastes.
 # grabs words, makes the tag the last word prior to ".csv"
 fileTag = re.findall(r"[\w']+", csvFileName)[-2:-1][0]
 
+jsonFileCount = 0
+
 def writeNRecords(n):
+  jsonFileName = jsonFileArray[0] + "_" + str(jsonFileCount) + "." + jsonFileArray[1]
+  jsonFile = open( jsonFileName, 'w')  
   count = 0
   jsonFile.write("{\"docs\": [")
   for row in myReader:
@@ -39,8 +41,9 @@ def writeNRecords(n):
     if 0 == (count % n):
       break
   jsonFile.write("] }")
+  print "up to 10,000 JSON records saved to: ", jsonFileName  
+  return (jsonFileCount + 1)
 
-writeNRecords(10000)
-
-print "up to 10,000 JSON records saved to: ", jsonFileName  
+for x in range(1,250):
+  jsonFileCount = writeNRecords(10000)
 
