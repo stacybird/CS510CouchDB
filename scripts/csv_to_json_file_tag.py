@@ -28,7 +28,7 @@ fileTag = re.findall(r"[\w']+", csvFileName)[-2:-1][0]
 
 def writeNRecords(n):
   count = 0
-  jsonFile.write("{"docs": [")
+  jsonFile.write("{\"docs\": [")
   for row in myReader:
     if count != 0:
       jsonFile.write(", ")
