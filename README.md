@@ -17,3 +17,16 @@ The process of installing the primary CouchDB instance consists of:
 /etc/couchdb/local.ini
 7. sudo restart couchdb
 8. From there, set the admin password in futon and start loading or replicating data!
+
+## Loading Data
+
+1. Run Stacy's script to convert the data to JSON.
+2. Loop over each result with Stacy's other script to bulk import the data into CouchDB.
+
+## Replicating Data
+
+1. Go to Replicator in the Futon interface.
+2. Choose to Replicate from a remote database, using the other instance's internal IP: http://x.x.x.x:5984/traffic/
+3. Name the local database it will replicate to "traffic" as well.
+4. Check the "Continuous" box and click "Replicate".
+5. You can monitor the progress of the replication under the "Status" page when logged in as an admin.
