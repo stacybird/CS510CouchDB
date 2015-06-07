@@ -11,8 +11,9 @@ The process of installing the primary CouchDB instance consists of:
 1. sudo apt-get update
 2. sudo apt-get dist-upgrade
 3. sudo add-apt-repository ppa:couchdb/stable -y
-4. sudo apt-get install couchdb
-5. sudo sed -i 's/;bind_address = 127.0.0.1/bind_address = 0.0.0.0/g'
+4. 1. sudo apt-get update
+5. sudo apt-get install couchdb
+6. sudo sed -i 's/;bind_address = 127.0.0.1/bind_address = 0.0.0.0/g'
 /etc/couchdb/local.ini
-6. sudo restart couchdb
-7. From there, set the admin password in futon and start loading or replicating data!
+7. sudo restart couchdb
+8. From there, set the admin password in futon and start loading or replicating data!
