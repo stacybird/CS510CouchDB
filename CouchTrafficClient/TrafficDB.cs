@@ -24,77 +24,38 @@ namespace CouchTrafficClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryA().Run());
-            }
-            catch (QueryException)
-            {
-            } catch (Exception x) {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryA().RunAsyncWithForm(null, button1);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryB().Run());
-            }
-            catch (QueryException)
-            {
-            } catch (Exception x)
-            {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryB().RunAsyncWithForm(null, button2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryC().Run());
-            } catch (QueryException) {
-            } catch (Exception x)
-            {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryC().RunAsyncWithForm(null, button3);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryD().Run());
-            }
-            catch (QueryException)
-            {
-            } catch (Exception x)
-            {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryD().RunAsyncWithForm(null, button4);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryE().Run());
-            }
-            catch (QueryException)
-            {
-            } catch (Exception x)
-            {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryE().RunAsyncWithForm(null, button5);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            try {
-                MessageBox.Show(new QueryF().Run());
-            }
-            catch (QueryException)
-            {
-            } catch (Exception x)
-            {
-                MessageBox.Show("Error in Application: " + x.ToString());
-            }
+            // TODO: provide new Form for query results
+            new QueryF().RunAsyncWithForm(null, button6);
         }
     }
 }
