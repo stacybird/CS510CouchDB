@@ -24,8 +24,7 @@ namespace CouchTrafficClient
     public string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
     public Dictionary<object, object> Query(string designDocumentName, string viewName, IList<object> keys = null)
     {
-        dynamic queryResult = InternalQuery("querya", "querya");
-       var s = JsonConvert.SerializeObject(queryResult);
+        dynamic queryResult = InternalQuery(designDocumentName, viewName, keys);
         IList<object> a = queryResult.rows;
         var result = new Dictionary<object, object>();
         foreach (dynamic data in a)
