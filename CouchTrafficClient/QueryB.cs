@@ -9,9 +9,9 @@ namespace CouchTrafficClient
 {
     class QueryB : QueryBase
     {
-        public string Run()
+        public override string Run()
         {
-            return base.Run(); // return Query("querya", "querya").ToString();
+            return "Query Client Not Implemented"; // return Query("querya", "querya").ToString();
         }
     }
 }

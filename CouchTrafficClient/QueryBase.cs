@@ -14,16 +14,53 @@ namespace CouchTrafficClient
     {
 
     }
-    class QueryBase
+    abstract class QueryBase
     {
         /// <summary>
         /// Key used when the results from a Query had a row with a "null" key value.
         /// </summary>
         public const string QueryNullResult = "null";
-        public string Run()
+
+        /// <summary>
+        ///  Form where intermediate results from your execution can live if needed.
+        /// </summary>
+        protected Form resultForm;
+        public void RunAsyncWithForm(Form myForm, Button button)
         {
-            return "Query Client Not Implemented";
-    }
+            resultForm = myForm;
+            button.Enabled = false;
+            var t = new Task(() =>
+            {
+                try
+                {
+                    var result = this.Run();
+                    if (resultForm == null)
+                    {
+                        MessageBox.Show(result);
+                    }
+                    button.BeginInvoke((Action)delegate() { button.Enabled = true; });
+                }
+                catch (QueryException)
+                {
+                    if (resultForm != null)
+                    {
+                        resultForm.Close();
+                    }
+                    button.BeginInvoke((Action)delegate() { button.Enabled = true; });
+                }
+                catch (Exception x)
+                {
+                    MessageBox.Show("Error in Application: " + x.ToString());
+                    if (resultForm != null)
+                    {
+                        resultForm.Close();
+                    }
+                    button.BeginInvoke((Action)delegate() { button.Enabled = true; });
+                }
+            });
+            t.Start();
+        }
+        public abstract string Run();
     private string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
 
         /// <summary>
