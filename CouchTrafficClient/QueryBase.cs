@@ -21,11 +21,16 @@ namespace CouchTrafficClient
             return "Query Client Not Implemented";
     }
     public string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
-    protected ExpandoObject Query(string designDocumentName, string viewName)
+    protected ExpandoObject Query(string designDocumentName, string viewName, IList<object> keys = null)
     {
         try
         {
-            var url = Server + "_design/" + designDocumentName + "/_view/" + viewName;
+            var keyString = "";
+            if (keys != null)
+            {
+                keyString = string.Format("?keys={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)));
+            }
+            var url = Server + "_design/" + designDocumentName + "/_view/" + viewName + keyString;
             using (WebClient wc = new WebClient())
             {
                 wc.Encoding = System.Text.Encoding.UTF8;
