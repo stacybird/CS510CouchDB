@@ -16,12 +16,23 @@ namespace CouchTrafficClient
     }
     class QueryBase
     {
+        /// <summary>
+        /// Key used when the results from a Query had a row with a "null" key value.
+        /// </summary>
         public const string QueryNullResult = "null";
         public string Run()
         {
             return "Query Client Not Implemented";
     }
-    public string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
+    private string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
+
+        /// <summary>
+        /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
+        /// </summary>
+        /// <param name="designDocumentName">Name of the Design that the View lives within.</param>
+        /// <param name="viewName">Name of the View that you would like to query.</param>
+        /// <param name="keys">Optional list of keys to query the view for.</param>
+        /// <returns></returns>
     public Dictionary<object, object> Query(string designDocumentName, string viewName, IList<object> keys = null)
     {
         dynamic queryResult = InternalQuery(designDocumentName, viewName, keys);
