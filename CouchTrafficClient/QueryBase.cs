@@ -16,12 +16,25 @@ namespace CouchTrafficClient
     }
     class QueryBase
     {
+        public const string QueryNullResult = "null";
         public string Run()
         {
             return "Query Client Not Implemented";
     }
     public string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
-    protected ExpandoObject Query(string designDocumentName, string viewName, IList<object> keys = null)
+    public Dictionary<object, object> Query(string designDocumentName, string viewName, IList<object> keys = null)
+    {
+        dynamic queryResult = InternalQuery("querya", "querya");
+       var s = JsonConvert.SerializeObject(queryResult);
+        IList<object> a = queryResult.rows;
+        var result = new Dictionary<object, object>();
+        foreach (dynamic data in a)
+        {
+            result.Add(data.key ?? QueryNullResult, data.value);
+        }
+        return result;
+    }
+    private ExpandoObject InternalQuery(string designDocumentName, string viewName, IList<object> keys = null)
     {
         try
         {

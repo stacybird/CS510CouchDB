@@ -12,10 +12,9 @@ namespace CouchTrafficClient
     {
         public string Run()
         {
-            dynamic result = Query("querya", "querya");
-            IList<object> a = result.rows;
-            dynamic data = a[0];
-            var value = data.value;
+            var result = Query("querya", "querya");
+            // As a special case, null must be quoted coming back
+            var value = result[QueryNullResult];
             return String.Format("The total count is {0}.", value.ToString());
         }
     }
