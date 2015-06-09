@@ -17,7 +17,7 @@ namespace CouchTrafficClient
             int highwayID = 0;
             // i. Find highway ID of "I-205 NB"
             List<object> keys = new List<object> { new List<object>{"NORTH", "N", "I-205"} }, startkeys = new List<object> { "" }, endkeys = new List<object> { "" };
-            var result = Query("queryE", "getHighwayID", keys);
+            var result = Query("queryE", "getHighwayID", keys, "traffic", false);
             List<object> outobject;
             highwayID = Convert.ToInt32(result.Values.First().First().ToString());
 
@@ -26,7 +26,7 @@ namespace CouchTrafficClient
             result.Clear();
             //outobject.Clear();
             keys = new List<object> { highwayID };
-            result = Query("queryE", "getStationIDNameAndLength", keys);
+            result = Query("queryE", "getStationIDNameAndLength", keys, "traffic", false);
             if (result.TryGetValue(highwayID.ToString(), out outobject))
             {
                 foreach (List<object> o in outobject)
@@ -48,7 +48,7 @@ namespace CouchTrafficClient
                 result.Clear();
                 outobject = new List<object> { };
                 keys = new List<object> { sn };
-                result = Query("queryD", "getDetectorIDs", keys);
+                result = Query("queryD", "getDetectorIDs", keys, "traffic", false);
                 if (result.TryGetValue(sn, out outobject))
                 {
                     detectorIDList.Add(outobject);
@@ -78,7 +78,7 @@ namespace CouchTrafficClient
                         speeds.Clear();
                         startkeys = new List<object> { detectorID, timeInstance };
                         endkeys = new List<object> { detectorID, timeInstance, new List<object> { } };
-                        result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys);
+                        result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, "traffic", false);
                         if (result.Count > 0)
                         {
                             if (result.Values.First().First() != "")
@@ -126,7 +126,7 @@ namespace CouchTrafficClient
                         speeds.Clear();
                         startkeys = new List<object> { detectorID, timeInstance };
                         endkeys = new List<object> { detectorID, timeInstance, new List<object> { } };
-                        result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys);
+                        result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, "traffic", false);
                         if (result.Count > 0)
                         {
                             if (result.Values.First().First() != "")

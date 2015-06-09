@@ -61,8 +61,8 @@ namespace CouchTrafficClient
             t.Start();
         }
         public abstract string Run();
-    private string Server { get { return "http://52.10.252.48:5984/"; } }
-    private string NewServer { get { return "http://50.112.172.199:5984/";  } }
+    private string OldServer { get { return "http://52.10.252.48:5984/"; } }
+    private string Server { get { return "http://50.112.172.199:5984/";  } }
 
     /// <summary>
     /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
