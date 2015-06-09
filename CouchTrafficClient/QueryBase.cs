@@ -61,7 +61,7 @@ namespace CouchTrafficClient
             t.Start();
         }
         public abstract string Run();
-    private string Server { get { return "http://52.10.252.48:5984/traffic/"; } }
+    private string Server { get { return "http://52.10.252.48:5984/"; } }
 
         /// <summary>
         /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
@@ -70,9 +70,9 @@ namespace CouchTrafficClient
         /// <param name="viewName">Name of the View that you would like to query.</param>
         /// <param name="keys">Optional list of keys to query the view for.</param>
         /// <returns></returns>
-    public MultiValueDictionary Query(string designDocumentName, string viewName, IList<object> keys = null)
+    public MultiValueDictionary Query(string designDocumentName, string viewName, IList<object> keys = null, string db = "traffic")
     {
-        dynamic queryResult = InternalQuery(designDocumentName, viewName, keys);
+        dynamic queryResult = InternalQuery(designDocumentName, viewName, keys, db);
         IList<object> a = queryResult.rows;
         var result = new MultiValueDictionary();
         foreach (dynamic data in a)
@@ -81,7 +81,7 @@ namespace CouchTrafficClient
         }
         return result;
     }
-    private ExpandoObject InternalQuery(string designDocumentName, string viewName, IList<object> keys = null)
+    private ExpandoObject InternalQuery(string designDocumentName, string viewName, IList<object> keys = null, string db = "traffic")
     {
         try
         {
@@ -90,7 +90,7 @@ namespace CouchTrafficClient
             {
                 keyString = string.Format("?keys={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)));
             }
-            var url = Server + "_design/" + designDocumentName + "/_view/" + viewName + keyString;
+            var url = Server + db + "/_design/" + designDocumentName + "/_view/" + viewName + keyString;
             using (WebClient wc = new WebClient())
             {
                 wc.Encoding = System.Text.Encoding.UTF8;

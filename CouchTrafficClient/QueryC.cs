@@ -11,7 +11,9 @@ namespace CouchTrafficClient
     {
         public override string Run()
         {
-            return "Query Client Not Implemented"; // return Query("querya", "querya").ToString();
+            var result = Query("queryC", "partXXX", null, "traffic_subset");
+            var dataForKeyString = result["keyString"].First();
+            return string.Format("The result data for keyString was: {0}.", dataForKeyString.ToString());
         }
     }
 }
