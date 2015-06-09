@@ -27,11 +27,12 @@ fileTag = re.findall(r"[\w']+", csvFileName)[-2:-1][0]
 jsonFileCount = 0
 
 def writeNRecords(n):
-  jsonFileName = jsonFileArray[0] + "_" + str(jsonFileCount) + "." + jsonFileArray[1]
-  jsonFile = open( jsonFileName, 'w')  
   count = 0
-  jsonFile.write("{\"docs\": [")
   for row in myReader:
+    if count == 0:
+      jsonFileName = jsonFileArray[0] + "_" + str(jsonFileCount) + "." + jsonFileArray[1]
+      jsonFile = open( jsonFileName, 'w')  
+      jsonFile.write("{\"docs\": [")
     if count != 0:
       jsonFile.write(", ")
     row['type'] = fileTag
@@ -45,10 +46,11 @@ def writeNRecords(n):
     count += 1
     if 0 == (count % n):
       break
-  jsonFile.write("] }")
-  print "up to 10,000 JSON records saved to: ", jsonFileName  
+  if count != 0:
+    jsonFile.write("] }")
+    print str(count) + " JSON records saved to: ", jsonFileName  
   return (jsonFileCount + 1)
 
-for x in range(0,1792):
+for x in range(0,2000):
   jsonFileCount = writeNRecords(10000)
 
