@@ -11,7 +11,10 @@ namespace CouchTrafficClient
     {
         public override string Run()
         {
-            return "Query Client Not Implemented"; // return Query("querya", "querya").ToString();
+            var result = Query("queryb", "queryb"); // , new List<object> {"foo", "bar"};
+            // As a special case, null must be quoted coming back
+            var value = result[QueryNullResult];
+            return string.Format("The total volume is {0}.", value.ToString());
         }
     }
 }
