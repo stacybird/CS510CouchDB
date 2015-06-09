@@ -15,7 +15,7 @@ namespace CouchTrafficClient
             double stationLength = 0;
             // i. Find station length of "Foster NB" station
             List<object> keys = new List<object> { "Foster NB" }, startkeys = new List<object> { "" }, endkeys = new List<object> { "" };
-            var result = Query("queryD", "getStationLength", keys, "traffic", false);
+            var result = Query("queryD", "getStationLength", keys, false);
             List<object> outobject;
             if (result.TryGetValue("Foster NB", out outobject))
             {
@@ -31,7 +31,7 @@ namespace CouchTrafficClient
             result.Clear();
             outobject.Clear();
             keys = new List<object> { "Foster NB" };
-            result = Query("queryD", "getDetectorIDs", keys, "traffic", false);
+            result = Query("queryD", "getDetectorIDs", keys, false);
             if (result.TryGetValue("Foster NB", out outobject))
             {
                 detectorIDs = outobject;
@@ -55,7 +55,7 @@ namespace CouchTrafficClient
                     speeds.Clear();
                     startkeys = new List<object> { detectorID, timeInstance };
                     endkeys = new List<object> { detectorID, timeInstance, new List<object>{} };
-                    result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, "traffic", false);
+                    result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, false);
                     if (result.Count > 0)
                     {
                         if (result.Values.First().First() != "")
@@ -97,7 +97,7 @@ namespace CouchTrafficClient
                     speeds.Clear();
                     startkeys = new List<object> { detectorID, timeInstance };
                     endkeys = new List<object> { detectorID, timeInstance, new List<object> { } };
-                    result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, "traffic", false);
+                    result = QueryWithStartAndEnd("queryD", "getDetectorSpeeds", startkeys, endkeys, false);
                     if (result.Count > 0)
                     {
                         if (result.Values.First().First() != "")
