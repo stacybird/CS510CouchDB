@@ -20,7 +20,10 @@ The process of installing the primary CouchDB instance consists of:
 ## Loading Data
 
 1. Run Stacy's script to convert the data to JSON.
+ Example:   /usr/bin/time ./csv_to_json_file_tag.py ~/ProjectData-Cloud2015/freeway_loopdata.csv ~/toImport/freeway_loopdata.json
 2. Loop over each result with Stacy's other script to bulk import the data into CouchDB.
+(for 18 million records takes about 3 hours.)
+/usr/bin/time -p bash -c "for i in ~/toImport/freeway_loopdata_*.json; do ./import_to_couchdb.py 127.0.0.1 traffic \$i; sleep 4; done"
 
 ## Replicating Data
 
