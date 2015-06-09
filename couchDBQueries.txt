@@ -1,3 +1,7 @@
+// These are the document design queries from CouchDB
+// In some cases we did multi-view queries to get to the final result
+// The subviews are all listed here for each query A-F.
+
 Query A:
 function(document) {
   if(document.tag == "freeway_loopdata" && document.speed > 100) {
@@ -8,6 +12,8 @@ Reduce:
 function(keys, values, rereduce) {
   return sum(values);
 }
+
+
 Query B:
 function(document) {
   if(document.tag == "freeway_loopdata" && document.starttime.split(" ")[0] == "2011-09-22" && (document.detectorid == 1361 || document.detectorid == 1362 || document.detectorid == 1363)) {
@@ -18,6 +24,7 @@ Reduce:
 function(keys, values, rereduce) {
   return sum(values);
 }
+
 
 Query C
 Part 2:
@@ -76,6 +83,7 @@ function(doc)
   }
 }
 
+
 Query D:
 getDetectorID
 function(doc)
@@ -96,8 +104,6 @@ function(doc)
     emit([doc.detectorid, d.valueOf(), doc.starttime], doc.speed);
   }
 }
-
-
 getStationLength
 function(doc)
 {
@@ -106,6 +112,7 @@ function(doc)
     emit(doc.locationtext, doc.length);
   }
 }
+
 
 Query E:
 getHighwayID
@@ -124,10 +131,16 @@ function(doc)
     emit(doc.highwayid, [doc.stationid, doc.locationtext, doc.length]);
   }
 }
-Query F
 
+
+// Note, Query F was not feasible directly in CouchDB.
+// The query to find a route was done client-side in our application.
+// See CouchTrafficClient/QueryF.cs for the client-side portion.
+
+Query F
 function(doc) {
   if (doc.tag == "freeway_stations"){
     emit(doc.stationid, {'downstream':doc.downstream,'locationtext':doc.locationtext});
   }
 }
+
