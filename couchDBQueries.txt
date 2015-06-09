@@ -59,10 +59,17 @@ function(keys, values, rereduce) {
         return [avg, length]
     }
 }
+getDetectorID
+function(doc)
+{
+  if(doc.tag == "freeway_detectors")
+  {
+    emit(doc.locationtext, doc.detectorid);
+  }
+}
 
-Missing query to get detector id’s, but it is trivial.
 Query D:
-getDetectorID’s
+getDetectorID
 function(doc)
 {
   if(doc.tag == "freeway_detectors")
