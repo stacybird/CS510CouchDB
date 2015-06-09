@@ -77,7 +77,7 @@ namespace CouchTrafficClient
         var result = new MultiValueDictionary();
         foreach (dynamic data in a)
         {
-            result.Add(data.key ?? QueryNullResult, data.value);
+            result.Add(data.key == null ? QueryNullResult : data.key.ToString(), data.value);
         }
         return result;
     }

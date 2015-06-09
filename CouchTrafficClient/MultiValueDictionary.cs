@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CouchTrafficClient
 {
-    class MultiValueDictionary : Dictionary<object, List<object>> 
+    class MultiValueDictionary : Dictionary<string, List<object>> 
     {
-        public void Add(object k, object v) {
+        public void Add(string k, object v) {
             if(!base.ContainsKey(k))
                 base.Add(k, new List<object>());
             base[k].Add(v);

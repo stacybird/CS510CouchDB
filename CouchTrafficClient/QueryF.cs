@@ -11,7 +11,18 @@ namespace CouchTrafficClient
     {
         public override string Run()
         {
-            return "Query Client Not Implemented"; // return Query("querya", "querya").ToString();
+            var result = Query("QueryF", "part1");
+            // As a special case, null must be quoted coming back
+            // var value = result[QueryNullResult];
+            // var value = result[1045].First().downstream;
+            dynamic record = result["1045"].First();
+            var value = record.downstream;
+            // take values
+            // start at Johnson Creek location
+            // walk through values
+            // return the walked through list
+            // 
+            return string.Format("The total count is {0}.", value.ToString());
         }
     }
 }
