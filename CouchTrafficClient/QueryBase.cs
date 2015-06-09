@@ -61,8 +61,8 @@ namespace CouchTrafficClient
             t.Start();
         }
         public abstract string Run();
-    private string OldServer { get { return "http://52.10.252.48:5984/"; } }
-    private string Server { get { return "http://50.112.172.199:5984/";  } }
+    private string Server { get { return "http://52.10.252.48:5984/"; } }
+    private string NewServer { get { return "http://50.112.172.199:5984/";  } }
 
     /// <summary>
     /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
@@ -72,9 +72,9 @@ namespace CouchTrafficClient
     /// <param name="keys">Optional list of keys to query the view for.</param>
 
     /// <returns></returns>
-    public MultiValueDictionary Query(string designDocumentName, string viewName, IList<object> keys = null, string db = "traffic")
+    public MultiValueDictionary Query(string designDocumentName, string viewName, IList<object> keys = null, string db = "traffic", bool group = true)
     {
-        return InternalQuery(designDocumentName, viewName, null, null, keys, db);
+        return InternalQuery(designDocumentName, viewName, null, null, keys, db, group);
     }
     /// <summary>
     /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
@@ -84,30 +84,30 @@ namespace CouchTrafficClient
     /// <param name="startKey">Optional list of startkeys to query the view for.</param>
     /// <param name="endKey">Optional list of endkeys to query the view for.</param>
     /// <returns></returns>
-    public MultiValueDictionary QueryWithStartAndEnd(string designDocumentName, string viewName, object startKey, object endKey, string db = "traffic")
+    public MultiValueDictionary QueryWithStartAndEnd(string designDocumentName, string viewName, object startKey, object endKey, string db = "traffic", bool group = true)
     {
-        return InternalQuery(designDocumentName, viewName, startKey, endKey, null, db);
+        return InternalQuery(designDocumentName, viewName, startKey, endKey, null, db, group);
     }
-    private MultiValueDictionary InternalQuery(string designDocumentName, string viewName, object startKey = null, object endKey = null, IList<object> keys = null, string db = "traffic")
+    private MultiValueDictionary InternalQuery(string designDocumentName, string viewName, object startKey = null, object endKey = null, IList<object> keys = null, string db = "traffic", bool group = true)
     {
         try
         {
             var keyString = "";
             if (keys != null)
             {
-                keyString = string.Format("?keys={0}{1}", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)), keys.Count > 1 ? "&group=true" : "");
+                keyString += string.Format("?group={0}&keys={1}", group.ToString(), Uri.EscapeDataString(JsonConvert.SerializeObject(keys)), keys.Count > 1 ? "&group=true" : "");
             }
             else if (startKey != null && endKey != null)
             {
-                keyString = string.Format("?startkey={0}&endkey={1}&group=true", Uri.EscapeDataString(JsonConvert.SerializeObject(startKey)), Uri.EscapeDataString(JsonConvert.SerializeObject(endKey)));
+                keyString += string.Format("?group={0}&startkey={1}&endkey={2}", group.ToString(), Uri.EscapeDataString(JsonConvert.SerializeObject(startKey)), Uri.EscapeDataString(JsonConvert.SerializeObject(endKey)));
             }
             else if (startKey != null)
             {
-                keyString = string.Format("?startkey={0}&group=true", Uri.EscapeDataString(JsonConvert.SerializeObject(startKey)));
+                keyString += string.Format("?group={0}&startkey={1}", group.ToString(), Uri.EscapeDataString(JsonConvert.SerializeObject(startKey)));
             }
             else if (endKey != null)
             {
-                keyString = string.Format("?endkey={0}&group=true", Uri.EscapeDataString(JsonConvert.SerializeObject(endKey)));
+                keyString += string.Format("?group={0}&endkey={1}", group.ToString(), Uri.EscapeDataString(JsonConvert.SerializeObject(endKey)));
             }
             var url = Server + db + "/_design/" + designDocumentName + "/_view/" + viewName + keyString;
             dynamic queryResult;
