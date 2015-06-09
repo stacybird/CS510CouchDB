@@ -15,14 +15,21 @@ namespace CouchTrafficClient
             // As a special case, null must be quoted coming back
             // var value = result[QueryNullResult];
             // var value = result[1045].First().downstream;
-            dynamic record = result["1045"].First();
-            var value = record.downstream;
+            var list = new List<string>();
+            var key = "1046";
+            while (key != "0") {
+                dynamic record = result[key].First();
+                var name = record.locationtext;
+                key = record.downstream.ToString();
+                list.Add(name);
+            }
+            var value = string.Join(", ", list);
             // take values
             // start at Johnson Creek location
             // walk through values
             // return the walked through list
             // 
-            return string.Format("The total count is {0}.", value.ToString());
+            return string.Format("The route is: {0}.", value);
         }
     }
 }
