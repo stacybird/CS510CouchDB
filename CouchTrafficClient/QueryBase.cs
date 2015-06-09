@@ -88,7 +88,7 @@ namespace CouchTrafficClient
             var keyString = "";
             if (keys != null)
             {
-                keyString = string.Format("?keys={0}", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)));
+                keyString = string.Format("?keys={0}&group=true", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)));
             }
             var url = Server + db + "/_design/" + designDocumentName + "/_view/" + viewName + keyString;
             using (WebClient wc = new WebClient())
