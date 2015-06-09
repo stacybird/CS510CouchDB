@@ -4,11 +4,19 @@ function(document) {
     emit("topspeeds", 1);
   }
 }
+Reduce:
+function(keys, values, rereduce) {
+  return sum(values);
+}
 Query B:
 function(document) {
   if(document.tag == "freeway_loopdata" && document.starttime.split(" ")[0] == "2011-09-22" && (document.detectorid == 1361 || document.detectorid == 1362 || document.detectorid == 1363)) {
     emit("fosterdata", parseInt(document.volume));
   }
+}
+Reduce:
+function(keys, values, rereduce) {
+  return sum(values);
 }
 
 Query C
