@@ -86,6 +86,9 @@ namespace CouchTrafficClient
                     timePeriodCount++;
                 }
             }
+            var returnValueAM = totalAverageTravelTime / timePeriodCount;
+            totalAverageTravelTime = 0;
+            timePeriodCount = 0;
             // 9/22/2011 16:00:00 -> 9/22/2011 17:59:40
             for (long timeInstance = 1316732400000; timeInstance <= 1316739580000; timeInstance += 20000) // for each time instance
             {
@@ -129,8 +132,8 @@ namespace CouchTrafficClient
                 }
             }
 
-            var returnvalue = totalAverageTravelTime / timePeriodCount;
-            return string.Format("The average travel time for 7-9AM and 4-6PM on September 22, 2011 for station Foster NB in seconds = {0}.", returnvalue.ToString());
+            var returnValuePM = totalAverageTravelTime / timePeriodCount;
+            return string.Format("The average travel time for station Foster NB in seconds on September 22, 2011 for\n7-9AM = {0}\n4-6PM = {1}", returnValueAM.ToString(), returnValuePM.ToString());
         }
     }
 }

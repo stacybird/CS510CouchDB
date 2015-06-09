@@ -111,6 +111,9 @@ namespace CouchTrafficClient
                 }
                 timePeriodCount++;
             }
+            var returnValueAM = (totalAverageTravelTime / timePeriodCount) * 60;
+            totalAverageTravelTime = 0;
+            timePeriodCount = 0;
             // 9/22/2011 16:00:00 -> 9/22/2011 17:59:40
             for (long timeInstance = 1316732400000; timeInstance <= 1316739580000; timeInstance += 20000) // for each time instance
             {
@@ -160,8 +163,8 @@ namespace CouchTrafficClient
                 timePeriodCount++;
             }
 
-            var returnvalue = (totalAverageTravelTime / timePeriodCount) * 60;
-            return string.Format("The average travel time for 7-9AM and 4-6PM on September 22, 2011 for the I-205 NB freeway in minutes = {0}.", returnvalue.ToString());
+            var returnValuePM = (totalAverageTravelTime / timePeriodCount) * 60;
+            return string.Format("The average travel time for the I-205 NB freeway in minutes on September 22, 2011 for\n7-9AM = {0}\n4-6PM = {1}.", returnValueAM.ToString(), returnValuePM.ToString());
         }
     }
 }
