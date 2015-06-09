@@ -70,11 +70,11 @@ namespace CouchTrafficClient
         /// <param name="viewName">Name of the View that you would like to query.</param>
         /// <param name="keys">Optional list of keys to query the view for.</param>
         /// <returns></returns>
-    public MultiValueDictionary<object, object> Query(string designDocumentName, string viewName, IList<object> keys = null)
+    public MultiValueDictionary Query(string designDocumentName, string viewName, IList<object> keys = null)
     {
         dynamic queryResult = InternalQuery(designDocumentName, viewName, keys);
         IList<object> a = queryResult.rows;
-        var result = new MultiValueDictionary<object, object>();
+        var result = new MultiValueDictionary();
         foreach (dynamic data in a)
         {
             result.Add(data.key ?? QueryNullResult, data.value);
