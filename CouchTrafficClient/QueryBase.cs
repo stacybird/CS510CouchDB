@@ -61,7 +61,8 @@ namespace CouchTrafficClient
             t.Start();
         }
         public abstract string Run();
-    private string Server { get { return "http://52.10.252.48:5984/"; } }
+    private string OldServer { get { return "http://52.10.252.48:5984/"; } }
+    private string Server { get { return "http://50.112.172.199:5984/";  } }
 
     /// <summary>
     /// Query a view from our CouchDB Server, returning a Dictionary of keys to values!
@@ -83,7 +84,7 @@ namespace CouchTrafficClient
     /// <param name="startKey">Optional list of startkeys to query the view for.</param>
     /// <param name="endKey">Optional list of endkeys to query the view for.</param>
     /// <returns></returns>
-    public MultiValueDictionary Query(string designDocumentName, string viewName, object startKey, object endKey, string db = "traffic")
+    public MultiValueDictionary QueryWithStartAndEnd(string designDocumentName, string viewName, object startKey, object endKey, string db = "traffic")
     {
         return InternalQuery(designDocumentName, viewName, startKey, endKey, null, db);
     }
@@ -94,7 +95,7 @@ namespace CouchTrafficClient
             var keyString = "";
             if (keys != null)
             {
-                keyString = string.Format("?keys={0}&group=true", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)));
+                keyString = string.Format("?keys={0}{1}", Uri.EscapeDataString(JsonConvert.SerializeObject(keys)), keys.Count > 1 ? "&group=true" : "");
             }
             else if (startKey != null && endKey != null)
             {
