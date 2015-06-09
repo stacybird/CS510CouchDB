@@ -13,7 +13,7 @@ namespace CouchTrafficClient
         {
             var result = Query("queryb", "queryb"); // , new List<object> {"foo", "bar"};
             // As a special case, null must be quoted coming back
-            var value = result[QueryNullResult];
+            var value = result[QueryNullResult].First();
             return string.Format("The total volume is {0}.", value.ToString());
         }
     }
